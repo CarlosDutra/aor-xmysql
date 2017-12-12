@@ -1,0 +1,21 @@
+{
+  "name": "aor-xmysql",
+  "version": "0.1.0",
+  "description": "Xmysql client for admin-on-rest",
+  "main": "lib/index.js",
+  "keywords": [
+    "admin-on-rest",
+    "react",
+    "xmysql",
+    "rest"
+  ],
+  "author": "Stanislav Oaserele",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/soaserele/aor-xmysql/issues"
+  },
+  "homepage": "https://github.com/soaserele/aor-xmysql",
+  "dependencies": {
+    "admin-on-rest": "^1.3.2"
+  }
+}
