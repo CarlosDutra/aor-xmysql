@@ -18,11 +18,11 @@ yarn add aor-xmysql
 
 ```js
 // in App.js
-import xmysqlRestClient from 'aor-xmysql';
+import XmysqlClient from 'aor-xmysql';
 
 ...
 
-    <Admin restClient={xmysqlRestClient('http://my.api.url/api')} ...>
+    <Admin restClient={XmysqlClient('http://my.api.url/api')} ...>
 ```
 
 ## License
