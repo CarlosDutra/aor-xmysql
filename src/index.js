@@ -1,5 +1,3 @@
 import XmysqlClient from './xmysql';
 
-export {
-    XmysqlClient,
-}
+export default XmysqlClient;
