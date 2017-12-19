@@ -55,8 +55,8 @@ export default (apiUrl, decorators = {}, httpClient = fetchJson) => {
                     const { page, perPage } = params.pagination;
                     const { field, order } = params.sort;
                     return httpClient(
-                        `${apiUrl}/${resource}?_p=${page -
-                            1}&_size=${perPage}&_sort=${order === 'DESC'
+                        `${apiUrl}/${resource}?_p=${page}
+                            &_size=${perPage}&_sort=${order === 'DESC'
                             ? '-'
                             : ''}${field}`
                     ).then(response => {
@@ -102,8 +102,8 @@ export default (apiUrl, decorators = {}, httpClient = fetchJson) => {
                     const { page, perPage } = params.pagination;
                     const { field, order } = params.sort;
                     return httpClient(
-                        `${apiUrl}/${resource}?_p=${page -
-                            1}&_size=${perPage}&_sort=${order === 'DESC'
+                        `${apiUrl}/${resource}?_p=${page}
+                            &_size=${perPage}&_sort=${order === 'DESC'
                             ? '-'
                             : ''}${field}&_where=(${params.target},eq,${params.id})`
                     ).then(response => {
