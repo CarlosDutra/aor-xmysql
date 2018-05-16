@@ -1,14 +1,16 @@
+
 import {
+    fetchUtils,
     GET_LIST,
     GET_ONE,
     GET_MANY,
     GET_MANY_REFERENCE,
     CREATE,
     UPDATE,
+    UPDATE_MANY,
     DELETE,
-} from 'admin-on-rest/lib/rest/types';
-import { fetchJson } from 'admin-on-rest/lib/util/fetch';
-
+    DELETE_MANY,
+} from 'react-admin';
 /**
  * Maps admin-on-rest queries to XMYSQL REST API
  * @see https://github.com/o1lab/xmysql
@@ -31,7 +33,7 @@ import { fetchJson } from 'admin-on-rest/lib/util/fetch';
  *
  *
  */
-export default (apiUrl, decorators = {}, httpClient = fetchJson) => {
+export default (apiUrl, httpClient, decorators = {}) => {
     /**
      * @param {string} type Request type, e.g GET_LIST
      * @param {string} resource Resource name, e.g. "posts"
@@ -42,7 +44,7 @@ export default (apiUrl, decorators = {}, httpClient = fetchJson) => {
         switch (type) {
             case GET_LIST:
                 return httpClient(
-                    `${apiUrl}/${resource}/count`
+                    `${apiUrl}/api/${resource}/count`
                 ).then(response => {
                     const rows = parseInt(response.json[0].no_of_rows, 10);
 
@@ -55,7 +57,7 @@ export default (apiUrl, decorators = {}, httpClient = fetchJson) => {
                     const { page, perPage } = params.pagination;
                     const { field, order } = params.sort;
                     return httpClient(
-                        `${apiUrl}/${resource}?_p=${page}
+                        `${apiUrl}/api/${resource}?_p=${page}
                             &_size=${perPage}&_sort=${order === 'DESC'
                             ? '-'
                             : ''}${field}`
@@ -73,7 +75,7 @@ export default (apiUrl, decorators = {}, httpClient = fetchJson) => {
                 });
             case GET_ONE:
                 return httpClient(
-                    `${apiUrl}/${resource}/${params.id}`
+                    `${apiUrl}/api/${resource}/${params.id}`
                 ).then(response => {
                     return {
                         data: response.json[0],
@@ -81,7 +83,7 @@ export default (apiUrl, decorators = {}, httpClient = fetchJson) => {
                 });
             case GET_MANY:
                 return httpClient(
-                    `${apiUrl}/${resource}/bulk/?_ids=${params.ids.join(',')}`
+                    `${apiUrl}/api/${resource}/bulk/?_ids=${params.ids.join(',')}`
                 ).then(response => {
                     return {
                         data: response.json,
@@ -89,7 +91,7 @@ export default (apiUrl, decorators = {}, httpClient = fetchJson) => {
                 });
             case GET_MANY_REFERENCE:
                 return httpClient(
-                    `${apiUrl}/${resource}/count`
+                    `${apiUrl}/api/${resource}/count`
                 ).then(response => {
                     const rows = parseInt(response.json[0].no_of_rows, 10);
                     if (rows < 1) {
@@ -102,7 +104,7 @@ export default (apiUrl, decorators = {}, httpClient = fetchJson) => {
                     const { page, perPage } = params.pagination;
                     const { field, order } = params.sort;
                     return httpClient(
-                        `${apiUrl}/${resource}?_p=${page}
+                        `${apiUrl}/api/${resource}?_p=${page}
                             &_size=${perPage}&_sort=${order === 'DESC'
                             ? '-'
                             : ''}${field}&_where=(${params.target},eq,${params.id})`
@@ -119,7 +121,7 @@ export default (apiUrl, decorators = {}, httpClient = fetchJson) => {
                     });
                 });
             case UPDATE:
-                return httpClient(`${apiUrl}/${resource}`, {
+                return httpClient(`${apiUrl}/api/${resource}`, {
                     method: 'PUT',
                     body: JSON.stringify(
                         decorators[`-${resource}`]
@@ -132,7 +134,7 @@ export default (apiUrl, decorators = {}, httpClient = fetchJson) => {
                     };
                 });
             case CREATE:
-                return httpClient(`${apiUrl}/${resource}`, {
+                return httpClient(`${apiUrl}/api/${resource}`, {
                     method: 'POST',
                     body: JSON.stringify(
                         decorators[`-${resource}`]
@@ -145,7 +147,7 @@ export default (apiUrl, decorators = {}, httpClient = fetchJson) => {
                     };
                 });
             case DELETE:
-                return httpClient(`${apiUrl}/${resource}/${params.id}`, {
+                return httpClient(`${apiUrl}/api/${resource}/${params.id}`, {
                     method: 'DELETE',
                     body: JSON.stringify(
                         decorators[`-${resource}`]
