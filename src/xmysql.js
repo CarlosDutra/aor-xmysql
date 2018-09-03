@@ -120,10 +120,6 @@ export default (apiUrl, decorators = {}, httpClient = fetchJson) => {
                     });
                 });
             case UPDATE:
-            	console.log("params.data")
-            	console.log(params.data)
-            	console.log("params")
-            	console.log(params)
                 return httpClient(`${apiUrl}/${resource}`, {
                     method: 'PUT',
                     body: JSON.stringify(
@@ -138,7 +134,7 @@ export default (apiUrl, decorators = {}, httpClient = fetchJson) => {
                             : params.data
                     )
                     return {
-                        data: response.json,
+                        data: params.data,
                     };
                 });
             case CREATE:
@@ -151,7 +147,7 @@ export default (apiUrl, decorators = {}, httpClient = fetchJson) => {
                     ),
                 }).then(response => {
                     return {
-                        data: response.json,
+                        data: params.data,
                     };
                 });
             case DELETE:
@@ -188,7 +184,7 @@ export default (apiUrl, decorators = {}, httpClient = fetchJson) => {
                 }
                 break;
             default:
-                throw new Error(`Não permitido: ${type} 002`);
+                throw new Error(`Não permitido: ${type} 003`);
         }
     };
 };
