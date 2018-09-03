@@ -5,8 +5,7 @@ import {
     GET_MANY_REFERENCE,
     CREATE,
     UPDATE,
-    DELETE,
-    DELETE_MANY
+    DELETE
 } from 'admin-on-rest/lib/rest/types';
 import { fetchJson } from 'admin-on-rest/lib/util/fetch';
 
@@ -138,6 +137,8 @@ export default (apiUrl, decorators = {}, httpClient = fetchJson) => {
                     };
                 });
             case CREATE:
+           	 	console.log("params.data")
+                console.log(params.data)
                 return httpClient(`${apiUrl}/${resource}`, {
                     method: 'POST',
                     body: JSON.stringify(
@@ -147,7 +148,7 @@ export default (apiUrl, decorators = {}, httpClient = fetchJson) => {
                     ),
                 }).then(response => {
                     return {
-                        data: params.data,
+                        data: response.data,
                     };
                 });
             case DELETE:
@@ -184,7 +185,7 @@ export default (apiUrl, decorators = {}, httpClient = fetchJson) => {
                 }
                 break;
             default:
-                throw new Error(`Não permitido: ${type} 003`);
+                //throw new Error(`Não permitido: ${type} 003`);
         }
     };
 };
