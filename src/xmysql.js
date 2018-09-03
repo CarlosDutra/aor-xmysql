@@ -160,20 +160,23 @@ export default (apiUrl, decorators = {}, httpClient = fetchJson) => {
                     };
                 });
             case DELETE_MANY:
-                return httpClient(`${apiUrl}/${resource}/bulk/?_ids=${params.ids.join(',')}`, {                    
-                    method: 'DELETE',
-                    body: JSON.stringify(
-                        decorators[`-${resource}`]
-                            ? decorators[`-${resource}`](params.data)
-                            : params.data
-                    ),
-                }).then(response => {
-                    return {
-                        data: response.json,
-                    };
-                });
+                for (delete_id in params.id) {
+                    return httpClient(`${apiUrl}/${resource}/${delete_id}`, {
+                        method: 'DELETE',
+                        body: JSON.stringify(
+                            decorators[`-${resource}`]
+                                ? decorators[`-${resource}`](params.data)
+                                : params.data
+                        ),
+                    }).then(response => {
+                        return {
+                            data: response.json,
+                        };
+                    });
+                }
+                break;
             default:
-                throw new Error(`Método não suportado: ${type}`);
+                throw new Error(`Não permitido: ${type}`);
         }
     };
 };
