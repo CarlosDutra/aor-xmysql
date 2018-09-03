@@ -120,6 +120,10 @@ export default (apiUrl, decorators = {}, httpClient = fetchJson) => {
                     });
                 });
             case UPDATE:
+            	console.log("params.data")
+            	console.log(params.data)
+            	console.log("params")
+            	console.log(params)
                 return httpClient(`${apiUrl}/${resource}`, {
                     method: 'PUT',
                     body: JSON.stringify(
@@ -133,13 +137,8 @@ export default (apiUrl, decorators = {}, httpClient = fetchJson) => {
                             ? decorators[`-${resource}`](params.data)
                             : params.data
                     )
-
-                    console.log("response.json")
-                    console.log(response.json)
-                    console.log("body.json")
-                    console.log(body.json)
                     return {
-                        data: body.json,
+                        data: response.json,
                     };
                 });
             case CREATE:
