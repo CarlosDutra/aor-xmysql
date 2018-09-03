@@ -130,7 +130,7 @@ export default (apiUrl, decorators = {}, httpClient = fetchJson) => {
                 }).then(response => {
                     console.log(response.json)
                     return {
-                        data: response.json,
+                        data: response.body.json,
                     };
                 });
             case CREATE:
