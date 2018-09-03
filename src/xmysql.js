@@ -128,8 +128,9 @@ export default (apiUrl, decorators = {}, httpClient = fetchJson) => {
                             : params.data
                     ),
                 }).then(response => {
+                    console.log("response.json")
                     console.log(response.json)
-                    console.log(response.body.json)
+                    console.log("body.json")
                     console.log(body.json)
                     return {
                         data: body.json,
