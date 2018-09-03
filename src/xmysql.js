@@ -173,7 +173,7 @@ export default (apiUrl, decorators = {}, httpClient = fetchJson) => {
                     };
                 });
             default:
-                throw new Error(`Unsupported fetch action type ${type}`);
+                throw new Error(`Método não suportado: ${type}`);
         }
     };
 };
