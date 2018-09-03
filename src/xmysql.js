@@ -160,7 +160,7 @@ export default (apiUrl, decorators = {}, httpClient = fetchJson) => {
                     ),
                 }).then(response => {
                     return {
-                        data: response.json,
+                        data: params.data,
                     };
                 });
             case DELETE_MANY:
