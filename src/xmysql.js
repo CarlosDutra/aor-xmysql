@@ -164,6 +164,7 @@ export default (apiUrl, decorators = {}, httpClient = fetchJson) => {
                 });
             case DELETE_MANY:
                 for (delete_id in params.id) {
+                    console.log("delete_id")
                     console.log(delete_id)
                     return httpClient(`${apiUrl}/${resource}/${delete_id}`, {
                         method: 'DELETE',
@@ -180,7 +181,7 @@ export default (apiUrl, decorators = {}, httpClient = fetchJson) => {
                 }
                 break;
             default:
-                throw new Error(`Não permitido: ${type}`);
+                throw new Error(`Não permitido: ${type} (v0.1)`);
         }
     };
 };
