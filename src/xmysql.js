@@ -6,6 +6,7 @@ import {
     CREATE,
     UPDATE,
     DELETE,
+    DELETE_MANY
 } from 'admin-on-rest/lib/rest/types';
 import { fetchJson } from 'admin-on-rest/lib/util/fetch';
 
@@ -127,6 +128,7 @@ export default (apiUrl, decorators = {}, httpClient = fetchJson) => {
                             : params.data
                     ),
                 }).then(response => {
+                    console.log(response.json)
                     return {
                         data: response.json,
                     };
@@ -146,6 +148,19 @@ export default (apiUrl, decorators = {}, httpClient = fetchJson) => {
                 });
             case DELETE:
                 return httpClient(`${apiUrl}/${resource}/${params.id}`, {
+                    method: 'DELETE',
+                    body: JSON.stringify(
+                        decorators[`-${resource}`]
+                            ? decorators[`-${resource}`](params.data)
+                            : params.data
+                    ),
+                }).then(response => {
+                    return {
+                        data: response.json,
+                    };
+                });
+            case DELETE_MANY:
+                return httpClient(`${apiUrl}/${resource}/bulk/?_ids=${params.ids.join(',')}`, {                    
                     method: 'DELETE',
                     body: JSON.stringify(
                         decorators[`-${resource}`]
