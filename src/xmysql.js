@@ -129,8 +129,10 @@ export default (apiUrl, decorators = {}, httpClient = fetchJson) => {
                     ),
                 }).then(response => {
                     console.log(response.json)
+                    console.log(response.body.json)
+                    console.log(body.json)
                     return {
-                        data: response.body.json,
+                        data: body.json,
                     };
                 });
             case CREATE:
@@ -161,6 +163,7 @@ export default (apiUrl, decorators = {}, httpClient = fetchJson) => {
                 });
             case DELETE_MANY:
                 for (delete_id in params.id) {
+                    console.log(delete_id)
                     return httpClient(`${apiUrl}/${resource}/${delete_id}`, {
                         method: 'DELETE',
                         body: JSON.stringify(
