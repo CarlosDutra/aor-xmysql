@@ -14,7 +14,6 @@ It can also be installed using yarn:
 yarn add aor-xmysql
 ```
 
-
 ## Usage
 
 ```js
