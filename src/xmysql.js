@@ -128,6 +128,12 @@ export default (apiUrl, decorators = {}, httpClient = fetchJson) => {
                             : params.data
                     ),
                 }).then(response => {
+                	body: JSON.stringify(
+                        decorators[`-${resource}`]
+                            ? decorators[`-${resource}`](params.data)
+                            : params.data
+                    )
+
                     console.log("response.json")
                     console.log(response.json)
                     console.log("body.json")
@@ -163,6 +169,8 @@ export default (apiUrl, decorators = {}, httpClient = fetchJson) => {
                     };
                 });
             case DELETE_MANY:
+           	 	console.log("params.id")
+                console.log(params.id)
                 for (delete_id in params.id) {
                     console.log("delete_id")
                     console.log(delete_id)
@@ -181,7 +189,7 @@ export default (apiUrl, decorators = {}, httpClient = fetchJson) => {
                 }
                 break;
             default:
-                throw new Error(`Não permitido: ${type} (v0.1)`);
+                throw new Error(`Não permitido: ${type} 002`);
         }
     };
 };
